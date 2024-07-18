@@ -7,6 +7,13 @@ import { Button } from "./ui/button";
 import { SendHorizontalIcon, User } from "lucide-react";
 import { ScrollArea } from "./ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipProvider,
+  TooltipContent,
+} from "@radix-ui/react-tooltip";
+import { Textarea } from "./ui/textarea";
 
 const Chat = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -16,7 +23,7 @@ const Chat = () => {
         {
           id: Date.now().toString(),
           role: "system",
-          content: "You are an assistant that gives short answers",
+          content: "You are an assistant that provides tech news.",
         },
       ],
     });
@@ -27,14 +34,10 @@ const Chat = () => {
   }, [messages]);
 
   return (
-    <section className="py-24 text-zinc-700">
-      <div className="container flex h-screen flex-col items-center justify-center">
-        <h1 className="text-2xl font-medium">Tech News Chatbot</h1>
-        <div className="mt-4 w-full max-w-lg">
-          <ScrollArea
-            className="mb-2 h-[400px] rounded-md border p-4"
-            ref={ref}
-          >
+    <section className=" text-zinc-700 p-2">
+      <div className="mx-auto flex flex-col items-center justify-center">
+        <div className="mt-4 w-full max-w-7xl">
+          <ScrollArea className="mb-20 rounded-md p-4 flex flex-col" ref={ref}>
             {error && (
               <div className="text-sm text-red-400">{error.message}</div>
             )}
@@ -45,7 +48,7 @@ const Chat = () => {
                     <Avatar>
                       <User className="rounded-full bg-zinc-300" />
                     </Avatar>
-                    <div className="mt-1.5">
+                    <div>
                       <p className="font-semibold">You</p>
                       <div className="mt-1.5 text-sm text-zinc-500">
                         {m.content}
@@ -60,15 +63,15 @@ const Chat = () => {
                       <AvatarImage
                         src="/gemini-logo.png"
                         alt="@shadcn"
-                        className="rounded-full h-6 w-6"
+                        className="rounded-full h-8 w-8 border"
                       />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
-                    <div className="mt-1.5 w-full">
+                    <div className=" w-full">
                       <div className="flex justify-between">
                         <p className="font-semibold">Bot</p>
                       </div>
-                      <div className="mt-2 text-sm text-zinc-500">
+                      <div className="mt-2 text-sm text-zinc-700 bg-zinc-200 p-2 rounded-md">
                         {m.content}
                       </div>
                     </div>
@@ -78,22 +81,27 @@ const Chat = () => {
             ))}
           </ScrollArea>
 
-          <form onSubmit={handleSubmit} className="relative">
+          <form
+            onSubmit={handleSubmit}
+            className="container fixed bottom-4 z-100 flex flex-col items-center justify-center"
+          >
             <Input
               value={input}
               onChange={handleInputChange}
               placeholder="Enter a prompt here"
-              className="pr-12 placeholder:italic placeholder:text-zinc-600/75 focus-visible:ring-none"
+              className="min-h-[60px] bg-zinc-700 w-full resize-none px-4 py-[1.3rem] focus-within:outline-none sm:text-sm placeholder:italic placeholder:text-zinc-50 text-zinc-50 focus-visible:ring-none"
             />
-            <Button
-              size="icon"
-              type="submit"
-              variant="secondary"
-              disabled={isLoading}
-              className="absolute right-1 top-1 h-8 w-10"
-            >
-              <SendHorizontalIcon className="h-5 w-5 text-zinc-500" />
-            </Button>
+            <div className="absolute right-0 top-[13px] sm:right-4">
+              <Button
+                size="icon"
+                type="submit"
+                variant="secondary"
+                disabled={isLoading}
+                className="absolute xl:right-8 right-10 top-0.8 h-8 w-10"
+              >
+                <SendHorizontalIcon className="h-5 w-5 text-zinc-500" />
+              </Button>
+            </div>
           </form>
         </div>
       </div>
