@@ -2,7 +2,6 @@
 
 import { useRef, useEffect } from "react";
 import { useChat } from "ai/react";
-import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { SendHorizontalIcon, User } from "lucide-react";
 import { ScrollArea } from "./ui/scroll-area";
