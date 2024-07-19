@@ -20,7 +20,7 @@ const buildGoogleGenAIPrompt = (messages: Message[]) => ({
 export async function POST(req: Request) {
   try {
     if (!process.env.GOOGLE_API_KEY) {
-      return new NextResponse("Missing OpenAI API Key.", { status: 400 });
+      return new NextResponse("Missing Gemini API Key.", { status: 400 });
     }
 
     const { messages } = await req.json();
